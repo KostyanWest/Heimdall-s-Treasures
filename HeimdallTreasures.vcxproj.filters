@@ -13,10 +13,39 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Исходные файлы\engine">
+      <UniqueIdentifier>{e106fc39-43c4-4e15-990a-58ee8dcaeb63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\engine\network">
+      <UniqueIdentifier>{6983f2ba-50da-4591-bc9e-381954e8764b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\engine">
+      <UniqueIdentifier>{7e0a169a-49c3-4209-856d-6ba8ccd84893}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\engine\network">
+      <UniqueIdentifier>{a194a603-48f3-4a29-a3e0-accc6713452c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="engine\network\client.cpp">
+      <Filter>Исходные файлы\engine\network</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\network\server.cpp">
+      <Filter>Исходные файлы\engine\network</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="engine\network\client.hpp">
+      <Filter>Файлы заголовков\engine\network</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\network\server.hpp">
+      <Filter>Файлы заголовков\engine\network</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\network.hpp">
+      <Filter>Файлы заголовков\engine</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

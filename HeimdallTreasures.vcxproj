@@ -151,7 +151,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="engine\network\client.cpp" />
+    <ClCompile Include="engine\network\server.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="engine\network.hpp" />
+    <ClInclude Include="engine\network\client.hpp" />
+    <ClInclude Include="engine\network\server.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
