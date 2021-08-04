@@ -1,6 +1,8 @@
 #ifndef HEIMDALL_ENGINE_NETWORK_CLIENT_HPP
 #define HEIMDALL_ENGINE_NETWORK_CLIENT_HPP
 
+
+
 namespace heimdall
 {
 namespace engine

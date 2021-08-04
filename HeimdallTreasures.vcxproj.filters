@@ -47,5 +47,8 @@
     <ClInclude Include="engine\network.hpp">
       <Filter>Файлы заголовков\engine</Filter>
     </ClInclude>
+    <ClInclude Include="engine\network\atomic_scoped_flag.hpp">
+      <Filter>Файлы заголовков\engine\network</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
