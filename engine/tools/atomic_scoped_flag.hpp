@@ -1,5 +1,5 @@
-#ifndef HEIMDALL_ENGINE_NETWORK_ATOMIC_SCOPED_FLAG_HPP
-#define HEIMDALL_ENGINE_NETWORK_ATOMIC_SCOPED_FLAG_HPP
+#ifndef HEIMDALL_ENGINE_TOOLS_ATOMIC_SCOPED_FLAG_HPP
+#define HEIMDALL_ENGINE_TOOLS_ATOMIC_SCOPED_FLAG_HPP
 
 #include <atomic>
 
@@ -9,7 +9,7 @@ namespace heimdall
 {
 namespace engine
 {
-namespace network
+namespace tools
 {
 
 
@@ -145,8 +145,8 @@ private:
 
 
 
-} // namespace network
+} // namespace tools
 } // namespace engine
 } // namespace heimdall
 
-#endif // !HEIMDALL_ENGINE_NETWORK_ATOMIC_SCOPED_FLAG_HPP
+#endif // !HEIMDALL_ENGINE_TOOLS_ATOMIC_SCOPED_FLAG_HPP

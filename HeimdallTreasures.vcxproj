@@ -175,7 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\network.hpp" />
-    <ClInclude Include="engine\network\atomic_scoped_flag.hpp" />
+    <ClInclude Include="engine\tools\atomic_scoped_flag.hpp" />
     <ClInclude Include="engine\network\client.hpp" />
     <ClInclude Include="engine\network\server.hpp" />
   </ItemGroup>

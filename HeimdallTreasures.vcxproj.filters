@@ -25,6 +25,9 @@
     <Filter Include="Файлы заголовков\engine\network">
       <UniqueIdentifier>{a194a603-48f3-4a29-a3e0-accc6713452c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\engine\tools">
+      <UniqueIdentifier>{f69db837-527c-41c5-8d28-fb1c23e75e89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -47,8 +50,8 @@
     <ClInclude Include="engine\network.hpp">
       <Filter>Файлы заголовков\engine</Filter>
     </ClInclude>
-    <ClInclude Include="engine\network\atomic_scoped_flag.hpp">
-      <Filter>Файлы заголовков\engine\network</Filter>
+    <ClInclude Include="engine\tools\atomic_scoped_flag.hpp">
+      <Filter>Файлы заголовков\engine\tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
