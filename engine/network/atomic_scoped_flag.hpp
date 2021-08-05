@@ -19,11 +19,15 @@ namespace network
 выходе из области видимости, если до этого успешно завладел флагом.
 
 @param T_atomic - любой std::atomic<>, поддерживающий работу с bool переменными.
+@param B_set - состояние флага, при котором флаг считается поднятым.
 @param A_order - модель памяти для операции чтения-изменения-записи own().
 @param R_order - модель памяти для операций записи clear() и деструктора.
+
+@exception noexcept
 */
 template<
 	typename T_atomic,
+	bool B_set = true,
 	std::memory_order A_order = std::memory_order_acquire,
 	std::memory_order R_order = std::memory_order_release
 >
@@ -51,7 +55,7 @@ public:
 	bool own() noexcept
 	{
 		if (!is_owner)
-			is_owner = !atomic.exchange( true, A_order );
+			is_owner = atomic.exchange( B_set, A_order ) != B_set;
 		return is_owner;
 	}
 
@@ -69,13 +73,13 @@ public:
 	void clear() noexcept
 	{
 		if (is_owner)
-			atomic.store( false, R_order );
+			atomic.store( !B_set, R_order );
 	}
 
 	/*
 	Прекращает владеть каким-либо флагом при уничтожении. Операция записи.
 	*/
-	~atomic_scoped_flag() noexcept
+	~atomic_scoped_flag()
 	{
 		clear();
 	}
@@ -93,12 +97,14 @@ private:
 
 @param A_order - модель памяти для операции чтения-изменения-записи own().
 @param R_order - модель памяти для операций записи clear() и деструктора.
+
+@exception noexcept
 */
 template<
 	std::memory_order A_order,
 	std::memory_order R_order
 >
-class atomic_scoped_flag<std::atomic_flag, A_order, R_order>
+class atomic_scoped_flag<std::atomic_flag, true, A_order, R_order>
 {
 public:
 	explicit atomic_scoped_flag( std::atomic_flag& atomic ) noexcept
@@ -127,7 +133,7 @@ public:
 			atomic.clear( R_order );
 	}
 
-	~atomic_scoped_flag() noexcept
+	~atomic_scoped_flag()
 	{
 		clear();
 	}
