@@ -28,6 +28,9 @@
     <Filter Include="Файлы заголовков\engine\tools">
       <UniqueIdentifier>{f69db837-527c-41c5-8d28-fb1c23e75e89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\engine\tools">
+      <UniqueIdentifier>{6d19af8d-c5a6-40c6-97b4-c93eba79b7a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -38,6 +41,9 @@
     </ClCompile>
     <ClCompile Include="engine\network\server.cpp">
       <Filter>Исходные файлы\engine\network</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\tools\timer.cpp">
+      <Filter>Исходные файлы\engine\tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +57,15 @@
       <Filter>Файлы заголовков\engine</Filter>
     </ClInclude>
     <ClInclude Include="engine\tools\atomic_scoped_flag.hpp">
+      <Filter>Файлы заголовков\engine\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\tools\buffer.hpp">
+      <Filter>Файлы заголовков\engine\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\tools\revision_cycled_queue.hpp">
+      <Filter>Файлы заголовков\engine\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\tools\timer.hpp">
       <Filter>Файлы заголовков\engine\tools</Filter>
     </ClInclude>
   </ItemGroup>

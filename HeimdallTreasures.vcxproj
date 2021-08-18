@@ -171,6 +171,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">boost/asio.hpp</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="engine\tools\timer.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +179,9 @@
     <ClInclude Include="engine\tools\atomic_scoped_flag.hpp" />
     <ClInclude Include="engine\network\client.hpp" />
     <ClInclude Include="engine\network\server.hpp" />
+    <ClInclude Include="engine\tools\buffer.hpp" />
+    <ClInclude Include="engine\tools\revision_cycled_queue.hpp" />
+    <ClInclude Include="engine\tools\timer.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
