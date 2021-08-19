@@ -15,7 +15,7 @@ namespace tools
 
 
 /*
-Хранит минимально и максимално возможные значения 
+Хранит минимально и максимально возможные значения 
 кратности интервалов таймеров в миллисекундах.
 */
 struct timecaps
@@ -38,29 +38,13 @@ private:
 
 public:
 	/*
-	Создаёт таймер с настройками по умолчанию.
-	*/
-	timer() noexcept {}
-
-	/*
-	Создаёт таймер с заданными настройками.
-
-	@param interval - длительность интервалов в миллисекундах, которые будет отсчитывать таймер.
-	@param time_point - начальная точка отсчёта.
-	*/
-	explicit timer( ms::rep interval, clock::time_point time_point = clock::now() ) noexcept
-		: interval( interval ), time_point( time_point )
-	{
-	}
-
-	/*
 	Создаёт таймер с заданными настройками.
 
 	@param time_point - начальная точка отсчёта.
 	@param interval - длительность интервалов в миллисекундах, которые будет отсчитывать таймер.
 	*/
-	explicit timer( clock::time_point time_point, ms::rep interval = 15 ) noexcept
-		: interval( interval ), time_point( time_point )
+	timer( clock::time_point time_point = clock::now(), ms::rep interval = 15 ) noexcept
+		: time_point( time_point ), interval( interval )
 	{
 	}
 
@@ -80,8 +64,9 @@ public:
 	передаётся новому экземпляру, старый экземпляр лишается этого права.
 	*/
 	timer( timer&& other ) noexcept
-		: interval( other.interval ), time_point( other.time_point ), tick_interval( other.tick_interval )
+		: interval( other.interval ), time_point( other.time_point )
 	{
+		set_tick_interval( other.tick_interval );
 		other.reset_tick_interval();
 	}
 
@@ -106,6 +91,7 @@ public:
 	{
 		interval = other.interval;
 		time_point = other.time_point;
+		set_tick_interval( other.tick_interval );
 		other.reset_tick_interval();
 		return *this;
 	}
@@ -138,7 +124,7 @@ public:
 
 	@return Новая точка отсчёта.
 	*/
-	clock::time_point from_prev() noexcept
+	clock::time_point from_last() noexcept
 	{
 		time_point += interval;
 		return time_point;
@@ -175,8 +161,8 @@ public:
 	}
 
 private:
-	ms interval { 15 };
 	clock::time_point time_point = clock::now();
+	ms interval { 15 };
 	unsigned int tick_interval = 0;
 };
 
