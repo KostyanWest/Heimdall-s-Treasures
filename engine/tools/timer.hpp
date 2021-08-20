@@ -106,8 +106,8 @@ public:
 	@param time_point - начальная точка отсчёта.
 	@param interval - длительность интервалов в миллисекундах, которые будет отсчитывать таймер.
 	*/
-	timer( clock::time_point time_point = clock::now(), ms::rep interval = 15 ) noexcept
-		: time_point( time_point ), interval( interval )
+	timer( ms::rep interval = 15, clock::time_point time_point = clock::now() ) noexcept
+		: interval( interval ), time_point( time_point )
 	{
 	}
 
