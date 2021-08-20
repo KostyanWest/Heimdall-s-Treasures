@@ -24,6 +24,8 @@ struct buffer
 	{
 	}
 
+	explicit operator bool() const noexcept { return ptr && size; }
+
 	void* ptr;
 	size_t size;
 };
