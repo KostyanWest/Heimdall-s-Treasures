@@ -27,8 +27,71 @@ struct timecaps
 
 
 /*
-Удобный класс для отсчёта одинаковых интервалов времени. 
-Способен изменять кратноть интервалов таймеров для всего приложения.
+Устанавливает кратность интервалов таймеров для всего приложения в миллисекундах.
+Для установки кратности создайте экземпляр класса. Для сброса - уничтожьте.
+Выбирается наименьшее значение из существующих на данный момент.
+Значение кратности в 0 миллисекунд не оказывает влияния.
+*/
+class time_period
+{
+public:
+	/*
+	Значение по умолчанию: 0. Не оказывает влияния.
+	*/
+	time_period() noexcept {}
+
+	/*
+	Значение кратности в 0 миллисекунд не оказывает влияния. 
+	Значения, выходящие за диапазон, возвращаемый методом get_timecaps(), 
+	всё равно будут вписаны в этот диапазон.
+
+	@param interval - новое значение кратности для данного экземпляра.
+	*/
+	time_period( unsigned int interval );
+
+	time_period( const time_period& other ) noexcept;
+
+	time_period( time_period&& other ) noexcept
+		: interval( other.interval )
+	{
+		other.interval = 0;
+	}
+
+	time_period& operator = ( const time_period& other ) noexcept
+	{
+		time_period copy( other );
+		std::swap( interval, copy.interval );
+		return *this;
+	}
+
+	time_period& operator = ( time_period&& other ) noexcept
+	{
+		time_period move( std::move( other ) );
+		std::swap( interval, move.interval );
+		return *this;
+	}
+
+	operator unsigned int() noexcept { return interval; }
+
+	/*
+	Сбрасывает кратность, установленную данным экземпляром.
+	*/
+	~time_period();
+
+	/*
+	@return Минимально и максимално возможные значения
+	кратности интервалов таймеров в миллисекундах.
+	*/
+	static timecaps get_timecaps();
+
+private:
+	unsigned int interval = 0;
+};
+
+
+
+/*
+Удобный класс для отсчёта одинаковых интервалов времени.
 */
 class timer
 {
@@ -49,52 +112,9 @@ public:
 	}
 
 	/*
-	Создаёт копию таймера с такими же интервалом и точкой отсчёта, 
-	а также повторно устанавливает кратность интервалов таймеров для всего приложения.
+	@return Предыдущая точка отсчёта.
 	*/
-	timer( const timer& other ) noexcept
-		: interval( other.interval ), time_point( other.time_point )
-	{
-		set_tick_interval( other.tick_interval );
-	}
-
-	/*
-	Создаёт копию таймера с такими же интервалом и точкой отсчёта,
-	но право на владение кратности интервалов таймеров для всего приложения 
-	передаётся новому экземпляру, старый экземпляр лишается этого права.
-	*/
-	timer( timer&& other ) noexcept
-		: interval( other.interval ), time_point( other.time_point )
-	{
-		set_tick_interval( other.tick_interval );
-		other.reset_tick_interval();
-	}
-
-	/*
-	Создаёт копию таймера с такими же интервалом и точкой отсчёта,
-	а также повторно устанавливает кратность интервалов таймеров для всего приложения.
-	*/
-	timer& operator = ( const timer& other ) noexcept
-	{
-		interval = other.interval;
-		time_point = other.time_point;
-		set_tick_interval( other.tick_interval );
-		return *this;
-	}
-
-	/*
-	Создаёт копию таймера с такими же интервалом и точкой отсчёта,
-	но право на владение кратности интервалов таймеров для всего приложения
-	передаётся новому экземпляру, старый экземпляр лишается этого права.
-	*/
-	timer& operator = ( timer&& other ) noexcept
-	{
-		interval = other.interval;
-		time_point = other.time_point;
-		set_tick_interval( other.tick_interval );
-		other.reset_tick_interval();
-		return *this;
-	}
+	explicit operator clock::time_point() const noexcept { return time_point; }
 
 	/*
 	@return Текущая длительность интервалов в миллисекундах.
@@ -107,6 +127,17 @@ public:
 	@param new_interval - новая длительность интервалов в миллисекундах.
 	*/
 	void set_interval( ms::rep new_interval ) noexcept { interval = ms { new_interval }; }
+
+	/*
+	@return Разница в миллисекундах между предыдущей и текущей точками отсчёта.
+	*/
+	ms::rep diff() const noexcept { return (time_point - clock::now()).count(); }
+
+
+	/*
+	Устанавливает точку отсчёта на текущую.
+	*/
+	void to_now() noexcept { time_point = clock::now(); }
 
 	/*
 	Изменяет точку отсчёта на "текущую + интервал".
@@ -130,40 +161,9 @@ public:
 		return time_point;
 	}
 
-	/*
-	@return Минимально и максимално возможные значения
-	кратности интервалов таймеров в миллисекундах.
-	*/
-	static timecaps get_timecaps();
-
-	/*
-	Устанавливает новую кратноть интервалов таймеров для всего приложения. 
-	Выбирается наименьшая кратность из всех действующих на данный момент. 
-	Значения, выходящие за диапазон, возвращаемый методом get_timecaps(), 
-	всё равно будут вписаны в этот диапазон.
-
-	@param tick_interval - новая кратность. Установка значения в 0 
-	приравнивается к сбросу установки кратности данным экземпляром.
-	*/
-	void set_tick_interval( unsigned int tick_interval );
-
-	/*
-	Сброс установки кратности интервалов таймеров для всего приложения.
-	*/
-	void reset_tick_interval() noexcept;
-
-	/*
-	Вызывает метод reset_tick_interval() при разрушении.
-	*/
-	~timer()
-	{
-		reset_tick_interval();
-	}
-
 private:
 	clock::time_point time_point = clock::now();
 	ms interval { 15 };
-	unsigned int tick_interval = 0;
 };
 
 
